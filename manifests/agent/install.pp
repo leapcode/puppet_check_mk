@@ -1,6 +1,6 @@
 class check_mk::agent::install (
   $version,
-  $filestore,
+  $filestore = '',
   $workspace,
 ) {
   if ! defined(Package['xinetd']) {
