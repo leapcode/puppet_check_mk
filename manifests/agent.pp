@@ -8,11 +8,16 @@ class check_mk::agent (
   $user         = 'root',
   $version      = undef,
   $workspace    = '/root/check_mk',
+  $agent_package_name           = 'check_mk-agent',
+  $agent_logwatch_package_name  = 'check_mk-agent-logwatch',
+
 ) {
   class { 'check_mk::agent::install':
-    version   => $version,
-    filestore => $filestore,
-    workspace => $workspace,
+    version                     => $version,
+    filestore                   => $filestore,
+    workspace                   => $workspace,
+    agent_package_name          => $agent_package_name,
+    agent_logwatch_package_name => $agent_logwatch_package_name
   }
   class { 'check_mk::agent::config':
     ip_whitelist => $ip_whitelist,

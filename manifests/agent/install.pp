@@ -2,6 +2,8 @@ class check_mk::agent::install (
   $version,
   $filestore = '',
   $workspace,
+  $agent_package_name,
+  $agent_logwatch_package_name,
 ) {
   if ! defined(Package['xinetd']) {
     package { 'xinetd':
@@ -43,10 +45,12 @@ class check_mk::agent::install (
   else {
     package { 'check_mk-agent':
       ensure  => present,
+      name    => $agent_package_name,
       require => Package['xinetd'],
     }
     package { 'check_mk-agent-logwatch':
       ensure  => present,
+      name    => $agent_logwatch_package_name,
       require => Package['check_mk-agent'],
     }
   }
