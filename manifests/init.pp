@@ -1,10 +1,13 @@
 class check_mk (
-  $filestore   = undef,
-  $host_groups = undef,
-  $package     = 'omd-0.56',
-  $site        = 'monitoring',
-  $workspace   = '/root/check_mk',
-) {
+  $filestore            = undef,
+  $host_groups          = undef,
+  $package              = 'omd-0.56',
+  $site                 = 'monitoring',
+  $workspace            = '/root/check_mk',
+  $omd_service_name     = 'omd',
+  $http_service_name    = 'httpd',
+  $xinitd_service_name  = 'xinitd' ) {
+
   class { 'check_mk::install':
     filestore => $filestore,
     package   => $package,
