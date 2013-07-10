@@ -1,5 +1,5 @@
 class check_mk::agent::install (
-  $version,
+  $version = '',
   $filestore = '',
   $workspace,
   $agent_package_name,
