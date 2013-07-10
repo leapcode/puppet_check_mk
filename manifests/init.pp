@@ -6,7 +6,7 @@ class check_mk (
   $workspace            = '/root/check_mk',
   $omd_service_name     = 'omd',
   $http_service_name    = 'httpd',
-  $xinitd_service_name  = 'xinitd' ) {
+  $xinitd_service_name  = 'xinetd' ) {
 
   class { 'check_mk::install':
     filestore => $filestore,
