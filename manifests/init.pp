@@ -7,7 +7,8 @@ class check_mk (
   $omd_service_name     = 'omd',
   $http_service_name    = 'httpd',
   $xinitd_service_name  = 'xinetd',
-  $omdadmin_htpasswd    = undef ) {
+  $omdadmin_htpasswd    = undef,
+  $use_ssh              = false ) {
 
   class { 'check_mk::install':
     filestore => $filestore,
@@ -28,4 +29,9 @@ class check_mk (
       password => $omdadmin_htpasswd
     }
   }
+
+  if ( $use_ssh == true ) {
+    class { '': }
+  }
+
 }

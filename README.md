@@ -70,6 +70,9 @@ created making the URL http://hostname/acme/check_mk/ running as the 'acme' user
 *omdadmin_htpasswd*: changes the htpasswd of the amdadmin user (requires apache module from i.e. 
                      https://labs.riseup.net/code/projects/shared-apache)
 
+*use_ssh*: Configures ssh to agents that use the same parameter.
+           Default: false.
+
 ### Notes
 
 * A user and group with the same value as the site parameter is created.  By default this is 'monitoring'.
