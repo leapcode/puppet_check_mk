@@ -1,4 +1,4 @@
-define check_mk::agent::client::generate_sshkey(
+define check_mk::agent::generate_sshkey(
   $ssh_key_basepath = '/etc/puppet/modules/keys/files/check_mk_keys',
   $user             = 'monitoring',
   $group            = 'monitoring',
