@@ -10,12 +10,23 @@ Puppet module for:
 Agent hostnames are automatically added to the server all_hosts configuration
 using stored configs.
 
-Currently only tested on Redhat-like systems.
+Currently only tested on Redhat-like systems and on Debian.
 
 ## Server
 
 * Installs omd package either using the system repository (eg. yum, apt) or
   from a package file retrieved from the Puppet file store
+
+* Use check_mk::omd_repo to enable a debian repository for omd
+  (requires apt module from i.e. https://labs.riseup.net/code/projects/shared-apt).
+  For now, you need to fetch the omd apt-key manually from 
+  http://labs.consol.de/nagios/omd-repository/, put it into your site_apt/files/keys
+  directory and pass the custom_key_dir parameter to the apt class, like 
+    
+
+    class { 'apt': 
+      custom_key_dir      => 'puppet:///modules/site-apt/keys'
+    }
 
 * Populates the all_hosts array in /etc/check_mk/main.mk with hostnames
   exported by check::agent classes on agent hosts
