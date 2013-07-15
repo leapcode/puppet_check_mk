@@ -12,6 +12,9 @@ using stored configs.
 
 Currently only tested on Redhat-like systems and on Debian.
 
+For examples how to use this class on a debian wheezy system, check out following 
+snippets: https://git.codecoop.org/snippets/1, https://git.codecoop.org/snippets/2
+
 ## Server
 
 * Installs omd package either using the system repository (eg. yum, apt) or
