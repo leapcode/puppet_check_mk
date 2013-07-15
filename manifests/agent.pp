@@ -15,7 +15,11 @@ class check_mk::agent (
 ) {
 
   if ( $use_ssh == true ) {
-    $tags = "$host_tags|$use_ssh_tag"
+    if ( $host_tags != '' ) {
+      $tags = "${host_tags}|${use_ssh_tag}"
+    } else {
+      $tags = $use_ssh_tag
+    }
   } else {
     $tags = $host_tags
   }
