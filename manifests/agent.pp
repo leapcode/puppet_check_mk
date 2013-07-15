@@ -22,6 +22,7 @@ class check_mk::agent (
     }
   } else {
     $tags = $host_tags
+    include check_mk::agent::service
   }
 
   class { 'check_mk::agent::install':
@@ -40,7 +41,6 @@ class check_mk::agent (
     use_ssh      => $use_ssh,
     require      => Class['check_mk::agent::install'],
   }
-  include check_mk::agent::service
   @@check_mk::host { $::fqdn:
     host_tags => $tags,
   }
