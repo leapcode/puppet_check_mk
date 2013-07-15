@@ -8,5 +8,6 @@ class check_mk::server::configure_ssh (
   file { "${check_mk::config::etc_dir}/check_mk/conf.d/use_ssh.mk":
     source => [ 'puppet:///modules/site_check_mk/use_ssh.mk',
                 'puppet:///modules/check_mk/use_ssh.mk' ],
+    notify => Exec['check_mk-refresh']
   }
 }
