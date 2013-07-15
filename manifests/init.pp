@@ -6,7 +6,8 @@ class check_mk (
   $workspace            = '/root/check_mk',
   $omd_service_name     = 'omd',
   $http_service_name    = 'httpd',
-  $xinitd_service_name  = 'xinetd' ) {
+  $xinitd_service_name  = 'xinetd',
+  $omdadmin_htpasswd    = undef ) {
 
   class { 'check_mk::install':
     filestore => $filestore,
@@ -21,5 +22,10 @@ class check_mk (
   }
   class { 'check_mk::service':
     require   => Class['check_mk::config'],
+  }
+  if $omdadmin_htpasswd {
+    class { 'check_mk::htpasswd':
+      password => $omdadmin_htpasswd
+    }
   }
 }
