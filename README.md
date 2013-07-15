@@ -67,6 +67,9 @@ created making the URL http://hostname/acme/check_mk/ running as the 'acme' user
 
 *workspace*: The directory to use to store files used during installation.  Default: '/root/check_mk'
 
+*omdadmin_htpasswd*: changes the htpasswd of the amdadmin user (requires apache module from i.e. 
+                     https://labs.riseup.net/code/projects/shared-apache)
+
 ### Notes
 
 * A user and group with the same value as the site parameter is created.  By default this is 'monitoring'.
@@ -130,6 +133,10 @@ Only required if a filestore is used.
 
 *workspace*: The directory to use to store files used during installation.
 Default: '/root/check_mk'
+
+*use_ssh*: Use ssh instead of the tcp wrapper. Deploys ssh keypair on server and 
+           allows the server to execute the agent on the client.
+           Default: false.
 
 ## Host groups and tags
 
