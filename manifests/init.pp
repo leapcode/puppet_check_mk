@@ -31,7 +31,7 @@ class check_mk (
   }
 
   if ( $use_ssh == true ) {
-    class { '': }
+    class { 'check_mk::server::configure_ssh': }
   }
 
 }
