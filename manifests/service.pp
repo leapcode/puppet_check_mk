@@ -1,9 +1,8 @@
 class check_mk::service {
 
-  if ! defined(Service[httpd]) {
-    service { 'httpd':
+  if ! defined(Service[$check_mk::http_service_name]) {
+    service { $check_mk::http_service_name:
       ensure => 'running',
-      name   => $check_mk::http_service_name,
       enable => true,
     }
   }
