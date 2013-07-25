@@ -8,7 +8,9 @@ class check_mk (
   $http_service_name    = 'httpd',
   $xinitd_service_name  = 'xinetd',
   $omdadmin_htpasswd    = undef,
-  $use_ssh              = false ) {
+  $use_ssh              = false,
+  $shelluser            = 'monitoring',
+  $shellgroup           = 'monitoring' ) {
 
   class { 'check_mk::install':
     filestore => $filestore,
