@@ -11,7 +11,8 @@ class check_mk::agent (
   $agent_package_name           = 'check_mk-agent',
   $agent_logwatch_package_name  = 'check_mk-agent-logwatch',
   $use_ssh                      = false,
-  $use_ssh_tag                  = 'ssh'
+  $use_ssh_tag                  = 'ssh',
+  $register_agent               = true
 ) {
 
   if ( $use_ssh == true ) {
@@ -41,7 +42,10 @@ class check_mk::agent (
     use_ssh      => $use_ssh,
     require      => Class['check_mk::agent::install'],
   }
-  @@check_mk::host { $::fqdn:
-    host_tags => $tags,
+
+  if ( $register_agent ) {
+    @@check_mk::host { $::fqdn:
+      host_tags => $tags,
+    }
   }
 }
