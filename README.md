@@ -140,9 +140,13 @@ Only required if a filestore is used.
 *workspace*: The directory to use to store files used during installation.
 Default: '/root/check_mk'
 
-*use_ssh*: Use ssh instead of the tcp wrapper. Deploys ssh keypair on server and 
-           allows the server to execute the agent on the client.
+*use_ssh*: Use ssh instead of the tcp wrapper in order to allows the server to 
+           execute the agent on the client.
            Default: false.
+
+           * Deploys ssh keypair on server (in /opt/omd/sites/monitoring/.ssh)
+           * Saves keypair on puppetmaster (/etc/puppet/modules/keys/files/check_mk_keys by default)
+           * Deploys public key on client in /root/.ssh/authorized_keys (restricting allows command to "/usr/bin/check_mk_agent")
 
 ## Host groups and tags
 
