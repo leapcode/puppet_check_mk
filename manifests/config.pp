@@ -1,9 +1,9 @@
 class check_mk::config (
   $site,
   $host_groups = undef,
-) {
-  $etc_dir = "/omd/sites/${site}/etc"
+  $etc_dir = "/omd/sites/${site}/etc",
   $bin_dir = "/omd/sites/${site}/bin"
+) {
   file { "${etc_dir}/nagios/local":
     ensure => directory,
   }
