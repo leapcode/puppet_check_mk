@@ -2,6 +2,7 @@ class check_mk::agent::config (
   $ip_whitelist = '',
   $port,
   $server_dir,
+  $homedir,
   $use_cache,
   $user,
   $use_ssh = false
@@ -14,7 +15,9 @@ class check_mk::agent::config (
   }
 
   if ( $use_ssh == true ){
-    check_mk::agent::generate_sshkey { 'check_mk_key': }
+    check_mk::agent::generate_sshkey { 'check_mk_key':
+      homedir => $homedir
+    }
   } else {
 
     if $ip_whitelist {
