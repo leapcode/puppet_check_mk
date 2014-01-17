@@ -12,13 +12,13 @@ class check_mk::config (
     line    => "cfg_dir=${etc_dir}/nagios/local",
     path    => "${etc_dir}/nagios/nagios.cfg",
     require => File["${etc_dir}/nagios/local"],
-    notify  => Class['check_mk::service'],
+    #notify  => Class['check_mk::service'],
   }
   file_line { 'add-guest-users':
     ensure => present,
     line   => 'guest_users = [ "guest" ]',
     path   => "${etc_dir}/check_mk/multisite.mk",
-    notify => Class['check_mk::service'],
+    #notify => Class['check_mk::service'],
   }
   concat { "${etc_dir}/check_mk/main.mk":
     owner  => 'root',
