@@ -23,14 +23,13 @@ class check_mk::agent (
       include check_mk::agent::service
     }
     'ssh': {
-    if ( $host_tags != '' ) {
-      $tags = "${host_tags}|${use_ssh_tag}"
-    } else {
-      $tags = $use_ssh_tag
+      if ( $host_tags != '' ) {
+        $tags = "${host_tags}|${use_ssh_tag}"
+      } else {
+        $tags = $use_ssh_tag
+      }
     }
-  } else {
-    $tags = $host_tags
-    include check_mk::agent::service
+    default: {}
   }
 
   class { 'check_mk::agent::install':
@@ -42,15 +41,15 @@ class check_mk::agent (
     method                      => $method
   }
   class { 'check_mk::agent::config':
-    ip_whitelist => $ip_whitelist,
-    port         => $port,
-    server_dir   => $server_dir,
-    homedir      => $homedir,
-    use_cache    => $use_cache,
-    user         => $user,
+    ip_whitelist       => $ip_whitelist,
+    port               => $port,
+    server_dir         => $server_dir,
+    homedir            => $homedir,
+    use_cache          => $use_cache,
+    user               => $user,
     method             => $method,
     generate_sshkey    => $generate_sshkey,
-    require      => Class['check_mk::agent::install'],
+    require            => Class['check_mk::agent::install'],
   }
 
   if ( $register_agent ) {
