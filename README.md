@@ -203,3 +203,7 @@ You can also include host tags - for example:
       'host2.domain|windows|prod',
 
 Remember to run the Puppet agent on your monitoring host to pick up any changes.
+
+This is the riseup clone, available at:
+
+git://labs.riseup.net/module_check_mk

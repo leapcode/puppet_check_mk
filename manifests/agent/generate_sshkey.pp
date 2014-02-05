@@ -2,7 +2,7 @@ define check_mk::agent::generate_sshkey(
   $ssh_key_basepath = '/etc/puppet/modules/keys/files/check_mk_keys',
   $user             = 'monitoring',
   $group            = 'monitoring',
-  $homedir          = '/omd/sites/monitoring',
+  $homedir,
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
