@@ -1,17 +1,18 @@
 class check_mk::config (
   $site,
-  $host_groups = undef,
-  $etc_dir = "/omd/sites/${site}/etc",
-  $bin_dir = "/omd/sites/${site}/bin"
+  $host_groups   = undef,
+  $etc_dir       = "/omd/sites/${site}/etc",
+  $nagios_subdir = 'nagios',
+  $bin_dir       = "/omd/sites/${site}/bin"
 ) {
-  file { "${etc_dir}/nagios/local":
+  file { "${etc_dir}/${nagios_subdir}/local":
     ensure => directory,
   }
   file_line { 'nagios-add-check_mk-cfg_dir':
     ensure  => present,
-    line    => "cfg_dir=${etc_dir}/nagios/local",
-    path    => "${etc_dir}/nagios/nagios.cfg",
-    require => File["${etc_dir}/nagios/local"],
+    line    => "cfg_dir=${etc_dir}/${nagios_subdir}/local",
+    path    => "${etc_dir}/${nagios_subdir}/nagios.cfg",
+    require => File["${etc_dir}/${nagios_subdir}/local"],
     #notify  => Class['check_mk::service'],
   }
   file_line { 'add-guest-users':
