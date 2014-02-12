@@ -11,7 +11,7 @@ class check_mk::install (
       }
     }
     file { "${workspace}/${package}":
-      ensure  => present,
+      ensure  => latest,
       source  => "${filestore}/${package}",
       require => File[$workspace],
     }

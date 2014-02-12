@@ -9,7 +9,7 @@ class check_mk::agent::install (
   if $method == 'xinetd' {
     if ! defined($require_method) {
       package { 'xinetd':
-        ensure => present,
+        ensure => latest,
       }
     }
     $require_method = 'Package[\'xinetd\']'
@@ -24,23 +24,23 @@ class check_mk::agent::install (
       }
     }
     file { "${workspace}/check_mk-agent-${version}.noarch.rpm":
-      ensure  => present,
+      ensure  => latest,
       source  => "${filestore}/check_mk-agent-${version}.noarch.rpm",
       require => $require_method,
     }
     file { "${workspace}/check_mk-agent-logwatch-${version}.noarch.rpm":
-      ensure  => present,
+      ensure  => latest,
       source  => "${filestore}/check_mk-agent-logwatch-${version}.noarch.rpm",
       require => $require_method,
     }
     package { 'check_mk-agent':
-      ensure   => present,
+      ensure   => latest,
       provider => 'rpm',
       source   => "${workspace}/check_mk-agent-${version}.noarch.rpm",
       require  => File["${workspace}/check_mk-agent-${version}.noarch.rpm"],
     }
     package { 'check_mk-agent-logwatch':
-      ensure   => present,
+      ensure   => latest,
       provider => 'rpm',
       source   => "${workspace}/check_mk-agent-logwatch-${version}.noarch.rpm",
       require  => [
@@ -51,12 +51,12 @@ class check_mk::agent::install (
   }
   else {
     package { 'check_mk-agent':
-      ensure  => present,
+      ensure  => latest,
       name    => $agent_package_name,
       require => $require_method,
     }
     package { 'check_mk-agent-logwatch':
-      ensure  => present,
+      ensure  => latest,
       name    => $agent_logwatch_package_name,
       require => Package['check_mk-agent'],
     }
