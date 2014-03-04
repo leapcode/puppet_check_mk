@@ -10,7 +10,8 @@ class check_mk (
   $omdadmin_htpasswd    = undef,
   $use_ssh              = false,
   $shelluser            = 'monitoring',
-  $shellgroup           = 'monitoring' ) {
+  $shellgroup           = 'monitoring',
+  $use_storedconfigs     = true ) {
 
   class { 'check_mk::install':
     filestore => $filestore,
@@ -19,9 +20,10 @@ class check_mk (
     workspace => $workspace,
   }
   class { 'check_mk::config':
-    host_groups => $host_groups,
-    site        => $site,
-    require     => Class['check_mk::install'],
+    host_groups      => $host_groups,
+    site             => $site,
+    use_storedconfigs => $use_storedconfigs,
+    require          => Class['check_mk::install'],
   }
   class { 'check_mk::service':
     require   => Class['check_mk::config'],

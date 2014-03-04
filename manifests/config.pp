@@ -1,9 +1,10 @@
 class check_mk::config (
   $site,
-  $host_groups   = undef,
-  $etc_dir       = "/omd/sites/${site}/etc",
-  $nagios_subdir = 'nagios',
-  $bin_dir       = "/omd/sites/${site}/bin"
+  $host_groups      = undef,
+  $etc_dir          = "/omd/sites/${site}/etc",
+  $nagios_subdir    = 'nagios',
+  $bin_dir          = "/omd/sites/${site}/bin",
+  $use_storedconfigs = true
 ) {
   file { "${etc_dir}/${nagios_subdir}/local":
     ensure => directory,
@@ -38,10 +39,11 @@ class check_mk::config (
     content => "]\n",
     order   => 19,
   }
-  Check_mk::Host <<| |>> {
-    target => "${etc_dir}/check_mk/main.mk",
-    notify => Exec['check_mk-refresh']
+  if ( $use_storedconfigs ) {
+    class { 'check_mk::server::collect_hosts': }
   }
+
+
   # local list of hosts is in /omd/sites/${site}/etc/check_mk/all_hosts_static and is appended
   concat::fragment { 'all-hosts-static':
     ensure  => "${etc_dir}/check_mk/all_hosts_static",

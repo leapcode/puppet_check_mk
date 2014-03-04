@@ -53,7 +53,7 @@ class check_mk::agent (
   }
 
   if ( $register_agent ) {
-    @@check_mk::host { $::fqdn:
+    class { 'check_mk::agent::register':
       host_tags => $tags,
     }
   }
