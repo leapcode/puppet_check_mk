@@ -6,7 +6,7 @@ define check_mk::agent::generate_sshkey(
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
-  # generate backupninja ssh keypair
+  # generate check-mk ssh keypair
   $ssh_key_name = "monitoring_${::fqdn}_id_rsa"
   $ssh_keys     = ssh_keygen("${ssh_key_basepath}/${ssh_key_name}")
   $public       = split($ssh_keys[1],' ')
