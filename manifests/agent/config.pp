@@ -1,8 +1,10 @@
 class check_mk::agent::config (
-  $ip_whitelist = '',
+  $ip_whitelist    = '',
   $port,
   $server_dir,
-  $homedir,
+  $keydir,
+  $authdir,
+  $authfile        = undef,
   $use_cache,
   $user,
   $method          = 'xinetd',
@@ -34,8 +36,19 @@ class check_mk::agent::config (
     }
     'ssh'   : {
       if $generate_sshkey {
-        check_mk::agent::generate_sshkey { 'check_mk_key':
-          homedir => $homedir
+        if $authfile {
+          # if authfile is overridden, pass it through
+          check_mk::agent::generate_sshkey { 'check_mk_key':
+            keydir   => $keydir,
+            authdir  => $authdir,
+            authfile => $authfile
+          }
+        } else {
+          # otherwise don't
+          check_mk::agent::generate_sshkey { 'check_mk_key':
+            keydir  => $keydir,
+            authdir => $authdir
+          }
         }
       }
     }
