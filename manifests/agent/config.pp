@@ -51,6 +51,11 @@ class check_mk::agent::config (
           }
         }
       }
+
+      # make sure the xinetd method is not configured
+      file { '/etc/xinetd.d/check_mk':
+        ensure  => absent;
+      }
     }
     default : {}
   }
