@@ -6,10 +6,10 @@ define check_mk::agent::generate_sshkey (
   # name of the authorized_keys file
   $authfile         = undef,
   # dir on the puppetmaster where keys are stored
-  $ssh_key_basepath = '/etc/puppet/modules/keys/files/check_mk_keys',
-  # user and group to run the agent as
-  $user             = 'monitoring',
-  $group            = 'monitoring',
+  # FIXME: need a way to ensure this dir is setup on the puppetmaster correctly
+  #$ssh_key_basepath = "${common::moduledir::module_dir_path}/check_mk/keys",
+  #  for now use a dir we know works
+  $ssh_key_basepath = '/etc/puppet/modules/check_mk/keys',
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
