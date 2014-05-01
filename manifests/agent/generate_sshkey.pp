@@ -10,6 +10,7 @@ define check_mk::agent::generate_sshkey (
   #$ssh_key_basepath = "${common::moduledir::module_dir_path}/check_mk/keys",
   #  for now use a dir we know works
   $ssh_key_basepath = '/etc/puppet/modules/check_mk/keys',
+  $sshuser          = 'root',
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
@@ -21,7 +22,15 @@ define check_mk::agent::generate_sshkey (
   $public_key   = $public[1]
   $secret_key   = $ssh_keys[0]
 
+  # if we're not root we need to use sudo
+  if $sshuser != 'root' {
+    $command = 'sudo /usr/bin/check_mk_agent'
+  } else {
+    $command = '/usr/bin/check_mk_agent'
+  }
+
   # setup the public half of the key in authorized_keys on the agent
+  #  and restrict it to running only the agent
   if $authdir or $authfile {
     # if $authkey or $authdir are set, override authorized_keys path and file
     sshd::ssh_authorized_key { $ssh_key_name:
@@ -29,7 +38,7 @@ define check_mk::agent::generate_sshkey (
         key     => $public_key,
         user    => 'root',
         target  => "${authdir}/${authfile}",
-        options => 'command="/usr/bin/check_mk_agent"';
+        options => "command=\"${command}\"";
     }
   } else {
     # otherwise use the defaults
@@ -37,7 +46,7 @@ define check_mk::agent::generate_sshkey (
         type    => 'ssh-rsa',
         key     => $public_key,
         user    => 'root',
-        options => 'command="/usr/bin/check_mk_agent"';
+        options => "command=\"${command}\"";
     }
   }
 

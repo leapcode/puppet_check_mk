@@ -15,6 +15,7 @@ class check_mk::agent (
   $agent_logwatch_package_name  = 'check_mk-agent-logwatch',
   $method                       = 'xinetd',
   $generate_sshkey              = false,
+  $sshuser                      = undef,
   $use_ssh_tag                  = 'ssh',
   $register_agent               = true
 ) {
@@ -56,6 +57,7 @@ class check_mk::agent (
       user               => $user,
       method             => $method,
       generate_sshkey    => $generate_sshkey,
+      sshuser            => $sshuser,
       require            => Class['check_mk::agent::install'],
     }
   } else {
@@ -70,6 +72,7 @@ class check_mk::agent (
       user               => $user,
       method             => $method,
       generate_sshkey    => $generate_sshkey,
+      sshuser            => $sshuser,
       require            => Class['check_mk::agent::install'],
     }
   }

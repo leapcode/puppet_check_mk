@@ -9,6 +9,7 @@ class check_mk::agent::config (
   $user,
   $method          = 'xinetd',
   $generate_sshkey = false,
+  $sshuser         = undef
 ) {
   if $use_cache {
     $server = "${server_dir}/check_mk_caching_agent"
@@ -39,15 +40,17 @@ class check_mk::agent::config (
         if $authfile {
           # if authfile is overridden, pass it through
           check_mk::agent::generate_sshkey { 'check_mk_key':
-            keydir   => $keydir,
-            authdir  => $authdir,
-            authfile => $authfile
+            keydir    => $keydir,
+            authdir   => $authdir,
+            authfile  => $authfile,
+            sshuser   => $sshuser
           }
         } else {
           # otherwise don't
           check_mk::agent::generate_sshkey { 'check_mk_key':
             keydir  => $keydir,
-            authdir => $authdir
+            authdir => $authdir,
+            sshuser => $sshuser
           }
         }
       }
