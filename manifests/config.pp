@@ -6,8 +6,18 @@ class check_mk::config (
   $bin_dir          = "/omd/sites/${site}/bin",
   $use_storedconfigs = true
 ) {
-  file { "${etc_dir}/${nagios_subdir}/local":
-    ensure => directory,
+  file {
+    # for local check_mk checks
+    "${etc_dir}/${nagios_subdir}/local":
+      ensure => directory;
+
+    # package provided and check_mk generated files, defined so the nagios
+    #  module doesn't purge them
+    "${etc_dir}/${nagios_subdir}/conf.d/check_mk":
+      ensure => directory;
+    [ "${etc_dir}/${nagios_subdir}/conf.d/check_mk/check_mk_objects.cfg",
+      "${etc_dir}/${nagios_subdir}/conf.d/check_mk/check_mk_templates.cfg" ]:
+      ensure => present;
   }
   file_line { 'nagios-add-check_mk-cfg_dir':
     ensure  => present,
