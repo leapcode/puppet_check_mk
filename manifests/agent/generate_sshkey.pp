@@ -1,6 +1,9 @@
 define check_mk::agent::generate_sshkey (
   # dir on the check-mk-server where the collected key pairs are stored
   $keydir,
+  # user/group the key should be owned by on the check-mk-server
+  $keyuser          = 'nagios',
+  $keygroup         = 'nagios',
   # dir on the check-mk-agent where the authorized_keys file is stored
   $authdir,
   # name of the authorized_keys file
@@ -54,11 +57,11 @@ define check_mk::agent::generate_sshkey (
   }
 
   # resource collector for the private half of the keys, these end up on
-  #  the check-mk-server host
+  #  the check-mk-server host, and the user running check-mk needs access
   @@file { "${keydir}/${ssh_key_name}":
     content => $secret_key,
-    owner   => root,
-    group   => root,
+    owner   => $keyuser,
+    group   => $keygroup,
     mode    => '0600',
     tag     => $check_mk_tag;
   }
