@@ -51,6 +51,7 @@ class check_mk::config (
   }
   if ( $use_storedconfigs ) {
     class { 'check_mk::server::collect_hosts': }
+    class { 'check_mk::server::collect_ps': }
   }
 
 
