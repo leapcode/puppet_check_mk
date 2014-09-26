@@ -8,9 +8,10 @@ class check_mk::service {
   }
   if ! defined(Service[xinetd]) {
     service { 'xinetd':
-      ensure => 'running',
-      name   => $check_mk::xinitd_service_name,
-      enable => true,
+      ensure    => 'running',
+      name      => $check_mk::xinitd_service_name,
+      hasstatus => false,
+      enable    => true,
     }
   }
   service { 'omd':
