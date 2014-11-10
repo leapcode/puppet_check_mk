@@ -26,10 +26,10 @@ class check_mk::agent (
       include check_mk::agent::service
     }
     'ssh': {
-      if ( $host_tags != '' ) {
-        $tags = "${host_tags}|${use_ssh_tag}"
-      } else {
+      if ( $host_tags == undef ) or ( $host_tags == '' ) {
         $tags = $use_ssh_tag
+      } else {
+        $tags = "${host_tags}|${use_ssh_tag}"
       }
     }
     default: {}
