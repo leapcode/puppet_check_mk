@@ -13,6 +13,7 @@ define check_mk::agent::generate_sshkey (
   #$ssh_key_basepath = "${common::moduledir::module_dir_path}/check_mk/keys",
   #  for now use a dir we know works
   $ssh_key_basepath = '/etc/puppet/modules/check_mk/keys',
+  # user on the client the check_mk server will ssh to, to run the agent
   $sshuser          = 'root',
   $check_mk_tag     = 'check_mk_sshkey'
 ){
