@@ -37,21 +37,11 @@ class check_mk::agent::config (
     }
     'ssh'   : {
       if $generate_sshkey {
-        if $authfile {
-          # if authfile is overridden, pass it through
-          check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
-            keydir    => $keydir,
-            authdir   => $authdir,
-            authfile  => $authfile,
-            sshuser   => $sshuser
-          }
-        } else {
-          # otherwise don't
-          check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
-            keydir  => $keydir,
-            authdir => $authdir,
-            sshuser => $sshuser
-          }
+        check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
+          keydir   => $keydir,
+          authdir  => $authdir,
+          authfile => $authfile,
+          sshuser  => $sshuser
         }
       }
 

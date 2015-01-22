@@ -44,37 +44,19 @@ class check_mk::agent (
     method                      => $method
   }
 
-  if $authfile {
-    # if authfile is set, pass it though
-    class { 'check_mk::agent::config':
-      ip_whitelist       => $ip_whitelist,
-      port               => $port,
-      server_dir         => $server_dir,
-      keydir             => $keydir,
-      authdir            => $authdir,
-      authfile           => $authfile,
-      use_cache          => $use_cache,
-      user               => $user,
-      method             => $method,
-      generate_sshkey    => $generate_sshkey,
-      sshuser            => $sshuser,
-      require            => Class['check_mk::agent::install'],
-    }
-  } else {
-    # otherwise don't
-    class { 'check_mk::agent::config':
-      ip_whitelist       => $ip_whitelist,
-      port               => $port,
-      server_dir         => $server_dir,
-      keydir             => $keydir,
-      authdir            => $authdir,
-      use_cache          => $use_cache,
-      user               => $user,
-      method             => $method,
-      generate_sshkey    => $generate_sshkey,
-      sshuser            => $sshuser,
-      require            => Class['check_mk::agent::install'],
-    }
+  class { 'check_mk::agent::config':
+    ip_whitelist    => $ip_whitelist,
+    port            => $port,
+    server_dir      => $server_dir,
+    keydir          => $keydir,
+    authdir         => $authdir,
+    authfile        => $authfile,
+    use_cache       => $use_cache,
+    user            => $user,
+    method          => $method,
+    generate_sshkey => $generate_sshkey,
+    sshuser         => $sshuser,
+    require         => Class['check_mk::agent::install'],
   }
 
   if ( $register_agent ) {
