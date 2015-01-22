@@ -5,8 +5,10 @@ class check_mk::agent::mrpe {
   # this subclass is provided to be included by checks that use mrpe
 
   # FIXME: this is Debian specific and should be made more generic
-  package { 'nagios-plugins-basic':
-    ensure => latest,
+  if !defined(Package['nagios-plugins-basic']) {
+    package { 'nagios-plugins-basic':
+      ensure => latest,
+    }
   }
 
   # ensure the config file exists, individual checks will add lines to it
