@@ -34,13 +34,25 @@ define check_mk::agent::generate_sshkey (
 
   # setup the public half of the key in authorized_keys on the agent
   #  and restrict it to running only the agent
-  sshd::ssh_authorized_key { $ssh_key_name:
-      type             => 'ssh-rsa',
-      key              => $public_key,
-      user             => $sshuser,
-      target           => "${authdir}/${authfile}",
-      override_builtin => true,
-      options          => "command=\"${command}\"";
+  if $authdir or $authfile {
+    # if $authkey or $authdir are set, override authorized_keys path and file
+    # and also override using the built-in ssh_authorized_key since it may
+    # not be able to write to $authdir
+    sshd::ssh_authorized_key { $ssh_key_name:
+        type             => 'ssh-rsa',
+        key              => $public_key,
+        user             => $sshuser,
+        target           => "${authdir}/${authfile}",
+        override_builtin => true,
+        options          => "command=\"${command}\"";
+  } else {
+    # otherwise use the defaults
+    sshd::ssh_authorized_key { $ssh_key_name:
+        type    => 'ssh-rsa',
+        key     => $public_key,
+        user    => $sshuser,
+        options => "command=\"${command}\"";
+    }
   }
 
   # resource collector for the private half of the keys, these end up on
