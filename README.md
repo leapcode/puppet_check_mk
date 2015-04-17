@@ -204,6 +204,59 @@ You can also include host tags - for example:
 
 Remember to run the Puppet agent on your monitoring host to pick up any changes.
 
+## Migrating from nagios-statd
+
+nagios-statd provides several features that can be replaced with check_mk
+plugins.
+
+*nagios-stat-proc*: checks processes on the agent system
+If you previously used the nagios puppet module to do something like:
+
+       check_command => 'nagios-stat-proc!/usr/sbin/foo!1!1!proc'
+
+you can now use the check_mk ps check:
+
+       check_mk::agent::ps {
+         'foo':
+           procname => '/usr/local/weirdpath/foo',
+           levels => '1, 2, 2, 3',
+           owner => 'alice'
+       }
+
+defaults:
+  procname: "/usr/sbin/${name}"
+  levels:   '1, 1, 1, 1'
+  owner: not required
+
+Run check_mk with '-M ps' for the manpage explaining the parameters.
+
+*swap*: check_mk has a 'mem.used' check which is enabled by default. But
+  as it's manpage explains if you want to measure swappiness you are
+  better off using the 'kernel' check and measuring 'Major Page Faults'
+  (pgmajfault).
+
+*disk*: check_mk has a 'df' check which is enabled by default.
+ 
+## Migrating from nrpe to mrpe
+
+If you were using nrpe to run a nagios plugin locally, first check if a
+native check_mk check exists with the same functionality, if not consider
+writing one. But if continuing to use the nagios plugin makes sense you
+can switch to mrpe.
+
+* Continue to deliver the plugin to the agent system
+* include check_mk::agent::mrpe
+* add a line to the mrpe.cfg file using augeas
+
+       augeas {
+         "Foo":
+           incl    => '/etc/check_mk/mrpe.cfg',
+           lens    => 'Spacevars.lns',
+           changes => 'set FOO /usr/local/lib/nagios/plugins/check_foo',
+           require => [ File['/usr/local/lib/nagios/plugins' ], Package['check-mk-agent'] ];
+       }
+
+
 This is the riseup clone, available at:
 
 git://labs.riseup.net/module_check_mk

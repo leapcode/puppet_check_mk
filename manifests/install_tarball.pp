@@ -31,6 +31,7 @@ class check_mk::install_tarball (
     ensure  => present,
     require => Package['nagios'],
   }
+  # FIXME: this should get and check $use_ssh before requiring xinetd
   package { [ 'xinetd', 'mod_python', 'make', 'gcc-c++', 'tar', 'gzip' ]:
     ensure  => present,
   }
