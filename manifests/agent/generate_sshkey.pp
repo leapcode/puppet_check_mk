@@ -1,8 +1,8 @@
 define check_mk::agent::generate_sshkey(
+  $homedir,
   $ssh_key_basepath = '/etc/puppet/modules/keys/files/check_mk_keys',
   $user             = 'monitoring',
   $group            = 'monitoring',
-  $homedir,
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
@@ -29,7 +29,6 @@ define check_mk::agent::generate_sshkey(
     tag     => $check_mk_tag;
   }
 
-
   @@file { "${homedir}/.ssh/${ssh_key_name}.pub":
     content => $public_key,
     owner   => $user,
@@ -37,6 +36,4 @@ define check_mk::agent::generate_sshkey(
     mode    => '0666',
     tag     => $check_mk_tag;
   }
-
-
 }
