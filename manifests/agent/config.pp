@@ -1,12 +1,15 @@
 class check_mk::agent::config (
-  $ip_whitelist = '',
+  $ip_whitelist    = '',
   $port,
   $server_dir,
-  $homedir,
+  $keydir,
+  $authdir,
+  $authfile        = undef,
   $use_cache,
   $user,
   $method          = 'xinetd',
   $generate_sshkey = false,
+  $sshuser         = undef
 ) {
   if $use_cache {
     $server = "${server_dir}/check_mk_caching_agent"
@@ -35,9 +38,17 @@ class check_mk::agent::config (
 
     'ssh': {
       if $generate_sshkey {
-        check_mk::agent::generate_sshkey { 'check_mk_key':
-          homedir => $homedir
+        check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
+          keydir   => $keydir,
+          authdir  => $authdir,
+          authfile => $authfile,
+          sshuser  => $sshuser
         }
+      }
+
+      # make sure the xinetd method is not configured
+      file { '/etc/xinetd.d/check_mk':
+        ensure  => absent;
       }
     }
 

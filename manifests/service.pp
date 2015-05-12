@@ -6,6 +6,7 @@ class check_mk::service {
       enable => true,
     }
   }
+  # FIXME: this should get and check $use_ssh before doing this
   if ! defined(Service[xinetd]) {
     service { 'xinetd':
       ensure    => 'running',
