@@ -46,6 +46,7 @@ define check_mk::agent::generate_sshkey (
         target           => "${authdir}/${authfile}",
         override_builtin => true,
         options          => "command=\"${command}\"";
+    }
   } else {
     # otherwise use the defaults
     sshd::ssh_authorized_key { $ssh_key_name:
