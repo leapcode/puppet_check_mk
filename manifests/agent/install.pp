@@ -50,13 +50,19 @@ class check_mk::agent::install (
     }
   }
   else {
+    if $version {
+      $agent_package_version = $version
+    } else {
+      $agent_package_version = latest
+    }
+
     package { 'check_mk-agent':
-      ensure  => latest,
+      ensure  => $agent_package_version,
       name    => $agent_package_name,
       require => $require_method,
     }
     package { 'check_mk-agent-logwatch':
-      ensure  => latest,
+      ensure  => $agent_package_version,
       name    => $agent_logwatch_package_name,
       require => Package['check_mk-agent'],
     }
