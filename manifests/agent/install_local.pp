@@ -1,4 +1,4 @@
-define check-mk::agent::install_local($source=undef, $content=undef, $ensure='present') {
+define check_mk::agent::install_local($source=undef, $content=undef, $ensure='present') {
   @file { "/usr/lib/check_mk_agent/local/${name}" :
     ensure  => $ensure,
     owner   => 'root',
