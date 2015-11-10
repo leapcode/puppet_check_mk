@@ -6,7 +6,7 @@ define check_mk::agent::install_local($source=undef, $content=undef, $ensure='pr
     mode    => '0755',
     content => $content,
     source  => $source,
-    tag     => 'check-mk::local',
+    tag     => 'check_mk::local',
     require => Package['check-mk-agent'],
   }
 }
