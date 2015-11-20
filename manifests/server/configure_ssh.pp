@@ -10,6 +10,7 @@ class check_mk::server::configure_ssh (
                 'puppet:///modules/check_mk/use_ssh.mk' ],
     owner  => $::check_mk::shelluser,
     group  => $::check_mk::shellgroup,
+    mode   => '0644',
     notify => Exec['check_mk-refresh']
   }
 }
