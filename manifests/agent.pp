@@ -17,6 +17,7 @@ class check_mk::agent (
   $generate_sshkey              = false,
   $sshuser                      = undef,
   $use_ssh_tag                  = 'ssh',
+  $hostname                     = $::fqdn,
   $register_agent               = true
 ) {
 
@@ -62,6 +63,7 @@ class check_mk::agent (
   if ( $register_agent ) {
     class { 'check_mk::agent::register':
       host_tags => $tags,
+      hostname  => $hostname,
     }
   }
 }
