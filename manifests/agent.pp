@@ -57,6 +57,7 @@ class check_mk::agent (
     method          => $method,
     generate_sshkey => $generate_sshkey,
     sshuser         => $sshuser,
+    hostname        => $hostname,
     require         => Class['check_mk::agent::install'],
   }
 
