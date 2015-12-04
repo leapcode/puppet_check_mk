@@ -9,7 +9,8 @@ class check_mk::agent::config (
   $user,
   $method          = 'xinetd',
   $generate_sshkey = false,
-  $sshuser         = undef
+  $sshuser         = undef,
+  $hostname        = $::fqdn
 ) {
   if $use_cache {
     $server = "${server_dir}/check_mk_caching_agent"
@@ -38,11 +39,12 @@ class check_mk::agent::config (
 
     'ssh': {
       if $generate_sshkey {
-        check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
+        check_mk::agent::generate_sshkey { "check_mk_key_${hostname}":
           keydir   => $keydir,
           authdir  => $authdir,
           authfile => $authfile,
-          sshuser  => $sshuser
+          sshuser  => $sshuser,
+          hostname => $hostname
         }
       }
 
