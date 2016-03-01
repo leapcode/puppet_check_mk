@@ -9,39 +9,42 @@ class check_mk::agent::config (
   $user,
   $method          = 'xinetd',
   $generate_sshkey = false,
-  $sshuser         = undef
+  $sshuser         = undef,
+  $hostname        = $::fqdn
 ) {
   if $use_cache {
     $server = "${server_dir}/check_mk_caching_agent"
-  }
-  else {
+  } else {
     $server = "${server_dir}/check_mk_agent"
   }
+
   case $method {
     'xinetd': {
-    if $ip_whitelist {
-      $only_from = join($ip_whitelist, ' ')
+      if $ip_whitelist {
+        $only_from = join($ip_whitelist, ' ')
+      } else {
+        $only_from = undef
+      }
+
+      file { '/etc/xinetd.d/check_mk':
+        ensure  => present,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0444',
+        content => template('check_mk/agent/check_mk.erb'),
+        require => Package['check_mk-agent','check_mk-agent-logwatch'],
+        notify  => Class['check_mk::agent::service'],
+      }
     }
-    else {
-      $only_from = undef
-    }
-    file { '/etc/xinetd.d/check_mk':
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0444',
-      content => template('check_mk/agent/check_mk.erb'),
-      require => Package['check_mk-agent','check_mk-agent-logwatch'],
-      notify  => Class['check_mk::agent::service'],
-    }
-    }
-    'ssh'   : {
+
+    'ssh': {
       if $generate_sshkey {
-        check_mk::agent::generate_sshkey { "check_mk_key_${::fqdn}":
+        check_mk::agent::generate_sshkey { "check_mk_key_${hostname}":
           keydir   => $keydir,
           authdir  => $authdir,
           authfile => $authfile,
-          sshuser  => $sshuser
+          sshuser  => $sshuser,
+          hostname => $hostname
         }
       }
 
@@ -50,6 +53,7 @@ class check_mk::agent::config (
         ensure  => absent;
       }
     }
+
     default : {}
   }
 }

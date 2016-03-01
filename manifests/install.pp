@@ -1,5 +1,6 @@
 class check_mk::install (
   $filestore = '',
+  $version = '',
   $package,
   $site,
   $workspace,
@@ -29,8 +30,15 @@ class check_mk::install (
   }
   else {
     $package_name = $package
+
+    if $version {
+      $server_package_version = $version
+    } else {
+      $server_package_version = latest
+    }
+
     package { $package_name:
-      ensure => installed,
+      ensure => $server_package_version,
     }
   }
   $etc_dir = "/omd/sites/${site}/etc"

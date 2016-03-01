@@ -15,11 +15,12 @@ define check_mk::agent::generate_sshkey (
   $ssh_key_basepath = '/etc/puppet/modules/check_mk/keys',
   # user on the client the check_mk server will ssh to, to run the agent
   $sshuser          = 'root',
+  $hostname         = $::fqdn,
   $check_mk_tag     = 'check_mk_sshkey'
 ){
 
   # generate check-mk ssh keypair, stored on puppetmaster
-  $ssh_key_name = "${::fqdn}_id_rsa"
+  $ssh_key_name = "${hostname}_id_rsa"
   $ssh_keys     = ssh_keygen("${ssh_key_basepath}/${ssh_key_name}")
   $public       = split($ssh_keys[1],' ')
   $public_type  = $public[0]
@@ -46,6 +47,7 @@ define check_mk::agent::generate_sshkey (
         target           => "${authdir}/${authfile}",
         override_builtin => true,
         options          => "command=\"${command}\"";
+    }
   } else {
     # otherwise use the defaults
     sshd::ssh_authorized_key { $ssh_key_name:

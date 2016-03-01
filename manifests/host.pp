@@ -4,7 +4,7 @@ define check_mk::host (
 ) {
   $host = $title
   if size($host_tags) > 0 {
-    $taglist = join($host_tags,'|')
+    $taglist = join(any2array($host_tags),'|')
     $entry = "${host}|${taglist}"
   }
   else {
