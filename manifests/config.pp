@@ -92,7 +92,7 @@ class check_mk::config (
   }
   # re-read config if it changes
   exec { 'check_mk-refresh':
-    command     => "/bin/su -l -c '${bin_dir}/check_mk -I' ${site}",
+    command     => "/bin/su -l -c '${bin_dir}/check_mk -II' ${site}",
     refreshonly => true,
     notify      => Exec['check_mk-reload'],
   }
