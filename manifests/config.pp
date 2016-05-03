@@ -1,11 +1,12 @@
 # Deploy check_mk config
 class check_mk::config (
   $site,
-  $host_groups      = undef,
-  $etc_dir          = "/omd/sites/${site}/etc",
-  $nagios_subdir    = 'nagios',
-  $bin_dir          = "/omd/sites/${site}/bin",
-  $use_storedconfigs = true
+  $host_groups               = undef,
+  $etc_dir                   = "/omd/sites/${site}/etc",
+  $nagios_subdir             = 'nagios',
+  $bin_dir                   = "/omd/sites/${site}/bin",
+  $use_storedconfigs         = true,
+  $inventory_only_on_changes = true
 ) {
   file {
     # for local check_mk checks
@@ -93,12 +94,12 @@ class check_mk::config (
   # re-read config if it changes
   exec { 'check_mk-refresh':
     command     => "/bin/su -l -c '${bin_dir}/check_mk -II' ${site}",
-    refreshonly => true,
+    refreshonly => $inventory_only_on_changes,
     notify      => Exec['check_mk-reload'],
   }
   exec { 'check_mk-reload':
     command     => "/bin/su -l -c '${bin_dir}/check_mk -O' ${site}",
-    refreshonly => true,
+    refreshonly => $inventory_only_on_changes,
     creates     => '/etc/nagios3/conf.d/check_mk/check_mk_objects.cfg'
   }
   # re-read inventory at least daily
