@@ -76,6 +76,12 @@ created making the URL http://hostname/acme/check_mk/ running as the 'acme' user
 *use_ssh*: Configures ssh to agents that use the same parameter.
            Default: false.
 
+*inventory_only_on_changes*: By default (parameter set to `true`) these two execs are called
+                             only when config files changes:
+                               - Exec['check_mk-refresh'] (which runs a check inventory by calling `check_mk -II`)
+                               - Exec['check_mk-reload']  (which generates the nagios config and reloads nagios by calling `check_mk -O`)
+                             By setting this parameter to `false` these execs will be called on each puppetrun.
+
 ### Notes
 
 * A user and group with the same value as the site parameter is created.  By default this is 'monitoring'.
