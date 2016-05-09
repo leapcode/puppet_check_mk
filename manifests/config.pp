@@ -100,7 +100,6 @@ class check_mk::config (
   exec { 'check_mk-reload':
     command     => "/bin/su -l -c '${bin_dir}/check_mk -O' ${site}",
     refreshonly => $inventory_only_on_changes,
-    creates     => '/etc/nagios3/conf.d/check_mk/check_mk_objects.cfg'
   }
   # re-read inventory at least daily
   exec { 'check_mk-refresh-inventory-daily':
