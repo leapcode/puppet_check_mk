@@ -1,0 +1,15 @@
+#!/bin/sh
+# check_apt wrapper to gather more info about pending packages
+
+# call the original plugin
+MSG=`/usr/lib/nagios/plugins/check_apt $*`
+
+EXIT=$?
+
+echo -n $MSG  | sed 's/available for upgrade/upgradable/' | sed 's/ updates//' | sed 's/\./:/'
+
+if [ "$EXIT" != "0" ]
+then 
+apt-get -s upgrade|egrep '(^  |wi ll be up|kept back)'|sed 's/The following packages will be upgraded://'| tr '\n' ' ' | sed 's/  */ /g'
+exit $EXIT
+fi

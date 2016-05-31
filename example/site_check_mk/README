@@ -1,0 +1,9 @@
+This is an example site_check_mk module for using the shared check_mk
+module. It is a sterilized version of riseup's site_check_mk, with some
+names changed.
+
+Project page
+  https://labs.riseup.net/code/projects/module-check_mk/
+
+git repo
+  git://labs.riseup.net/module_check_mk
