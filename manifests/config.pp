@@ -58,7 +58,7 @@ class check_mk::config (
 
   # local list of hosts is in /omd/sites/${site}/etc/check_mk/all_hosts_static and is appended
   concat::fragment { 'all-hosts-static':
-    ensure => "${etc_dir}/check_mk/all_hosts_static",
+    source => "${etc_dir}/check_mk/all_hosts_static",
     target => "${etc_dir}/check_mk/main.mk",
     order  => 18,
   }
@@ -87,7 +87,7 @@ class check_mk::config (
   }
   # local config is in /omd/sites/${site}/etc/check_mk/main.mk.local and is appended
   concat::fragment { 'check_mk-local-config':
-    ensure => "${etc_dir}/check_mk/main.mk.local",
+    source => "${etc_dir}/check_mk/main.mk.local",
     target => "${etc_dir}/check_mk/main.mk",
     order  => 99,
   }
