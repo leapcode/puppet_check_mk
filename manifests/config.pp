@@ -2,12 +2,12 @@
 class check_mk::config (
   $site,
   $host_groups               = undef,
-  $etc_dir                   = "/omd/sites/${site}/etc",
+  $etc_dir                   = $check_mk::params::etc_dir,
   $nagios_subdir             = 'nagios',
-  $bin_dir                   = "/omd/sites/${site}/bin",
+  $bin_dir                   = $check_mk::params::bin_dir,
   $use_storedconfigs         = true,
   $inventory_only_on_changes = true
-) {
+) inherits check_mk::params {
   file {
     # for local check_mk checks
     "${etc_dir}/${nagios_subdir}/local":
