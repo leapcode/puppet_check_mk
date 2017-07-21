@@ -1,9 +1,9 @@
 class check_mk::server::configure_ssh (
-  $check_mk_tag     = 'check_mk_sshkey'
+  $check_mk_tag     = 'check_mk_sshkey',
   $etc_dir          = $check_mk::params::etc_dir,
   $shelluser        = $check_mk::params::shelluser,
   $shellgroup       = $check_mk::params::shellgroup,
-) inherit check_mk::params {
+) inherits check_mk::params {
   # collect exported files from client::generate_sshkey
   File <<| tag == $check_mk_tag |>>
 
