@@ -1,6 +1,6 @@
 class check_mk::server::collect_ps (
-  $config = "${::check_mk::config::etc_dir}/check_mk/conf.d/ps.mk"
-) {
+  $config = "${check_mk::config::etc_dir}/check_mk/conf.d/ps.mk"
+) inherits check_mk::params {
 
   # this class gets run on the check-mk server in order to collect the
   # stored configs created on clients and assemble the ps.mk config file

@@ -12,8 +12,7 @@ using stored configs.
 
 Currently only tested on Redhat-like systems and on Debian.
 
-For examples how to use this class on a debian wheezy system, check out following 
-snippets: https://git.codecoop.org/snippets/1, https://git.codecoop.org/snippets/2
+For examples how to use this class see the example/ directory.
 
 ## Server
 

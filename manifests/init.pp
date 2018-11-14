@@ -4,16 +4,17 @@ class check_mk (
   $host_groups               = undef,
   $package                   = 'omd-0.56',
   $site                      = 'monitoring',
-  $workspace                 = '/root/check_mk',
-  $omd_service_name          = 'omd',
-  $http_service_name         = 'httpd',
-  $xinitd_service_name       = 'xinetd',
+  $workspace                 = $check_mk::params::workspace,
+  $omd_service_name          = $check_mk::params::omd_service_name,
+  $http_service_name         = $check_mk::params::http_service_name,
+  $xinitd_service_name       = $check_mk::params::xinetd_service_name,
   $omdadmin_htpasswd         = undef,
   $use_ssh                   = false,
-  $shelluser                 = 'monitoring',
-  $shellgroup                = 'monitoring',
+  $shelluser                 = $check_mk::params::shelluser,
+  $shellgroup                = $check_mk::params::shellgroup,
   $use_storedconfigs         = true,
-  $inventory_only_on_changes = true) {
+  $inventory_only_on_changes = true
+) inherits check_mk::params {
 
   class { 'check_mk::install':
     filestore => $filestore,
